@@ -1,0 +1,51 @@
+.mainPage{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.mainPageBar{
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 130px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mainPageBarButtons{
+    display: flex;
+    flex-direction: row;
+}
+
+.pageTitle{
+    margin: 2%;
+}
+
+.cartButton{
+    margin-top: 40px;
+    margin-right: 3%;
+    width: 140px;
+    height: 60px;
+}
+
+.searchBar{
+    width: 100%;
+    height: 100px;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding-left: 5%;
+}
+
+.itemListElement{
+    display: flex;
+    flex-direction: row;
+}
