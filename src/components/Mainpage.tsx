@@ -14,7 +14,7 @@ export default function Mainpage() {
   const location = useLocation();
   const state: string = location.state;
 
-  const [userid, setUserid] = useState<string>("default_user");
+  const [userid, setUserid] = useState<string>("quest");
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -68,7 +68,10 @@ export default function Mainpage() {
   };
 
   const handleAddToCart = async () => {
-    if (userid !== "default_user" && selectedProduct) {
+    if (userid == "quest") {
+      navigate("/");
+    }
+    if (userid !== "quest" && selectedProduct) {
       try {
         const response = await fetch(
           "http://localhost:8080/api/addcart_product",

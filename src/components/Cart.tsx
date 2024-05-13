@@ -6,7 +6,7 @@ export default function Cart() {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state;
-  const [userid, setUserid] = useState("default_user");
+  const [userid, setUserid] = useState("quest");
   const [products, setProducts] = useState<
     Array<{
       cart_owner: string;
@@ -16,6 +16,16 @@ export default function Cart() {
       amount: number;
     }>
   >([]);
+
+  useEffect(() => {
+    if (state != null) {
+      setUserid(state);
+    }
+
+    if (userid == "quest") {
+      navigate("/");
+    }
+  }, [state]); // Add state as dependency to useEffect
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,12 +53,6 @@ export default function Cart() {
 
     fetchData();
   }, [userid]); // Add userid as dependency to useEffect
-
-  useEffect(() => {
-    if (state != null) {
-      setUserid(state);
-    }
-  }, [state]); // Add state as dependency to useEffect
 
   const deleteProduct = async (productId: number) => {
     try {
