@@ -110,9 +110,15 @@ export default function Mainpage() {
           >
             Show Cart
           </button>
-          <button className="cartButton" onClick={() => navigate("/")}>
-            Log Out
-          </button>
+          {userid === "quest" ? (
+            <button className="cartButton" onClick={() => navigate("/")}>
+              Log In
+            </button>
+          ) : (
+            <button className="cartButton" onClick={() => navigate("/")}>
+              Log Out
+            </button>
+          )}
         </div>
       </div>
       <div className="searchBar">
