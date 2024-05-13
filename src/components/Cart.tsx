@@ -20,11 +20,7 @@ export default function Cart() {
   useEffect(() => {
     if (state != null) {
       setUserid(state);
-    }
-
-    if (userid == "quest") {
-      navigate("/");
-    }
+    } else navigate("/");
   }, [state]); // Add state as dependency to useEffect
 
   useEffect(() => {
