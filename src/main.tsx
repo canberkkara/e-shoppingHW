@@ -5,7 +5,6 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.tsx";
 import Mainpage from "./components/Mainpage.tsx";
-import Item from "./components/Item.tsx";
 import Cart from "./components/Cart.tsx";
 
 const router = createBrowserRouter([
@@ -20,10 +19,6 @@ const router = createBrowserRouter([
   {
     path: "/mainpage",
     element: <Mainpage />,
-  },
-  {
-    path: "/item",
-    element: <Item />,
   },
   {
     path: "/cart",

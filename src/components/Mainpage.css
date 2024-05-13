@@ -79,8 +79,6 @@
     overflow: scroll;
 }
 
-/* Add this CSS to your Mainpage.css file */
-
 .product-list table {
     width: 100%;
     border-collapse: collapse;
@@ -103,18 +101,16 @@
   
   .product-list th:first-child,
   .product-list td:first-child {
-    min-width: 200px; /* Adjust the width of the first column */
+    min-width: 200px;
   }
   
   .product-list th:nth-child(2),
   .product-list td:nth-child(2) {
-    min-width: 100px; /* Adjust the width of the second column */
+    min-width: 100px;
   }
   
   .product-list th:nth-child(3),
   .product-list td:nth-child(3) {
-    min-width: 150px; /* Adjust the width of the third column */
+    min-width: 150px;
   }
-  
-  /* Add more nth-child selectors as needed to adjust other columns */
   

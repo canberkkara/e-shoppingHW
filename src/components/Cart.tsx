@@ -21,7 +21,7 @@ export default function Cart() {
     if (state != null) {
       setUserid(state);
     } else navigate("/");
-  }, [state]); // Add state as dependency to useEffect
+  }, [state]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +31,7 @@ export default function Cart() {
           throw new Error("Failed to fetch products");
         }
         const data = await response.json();
-        console.log("Data from API:", data); // Log data here
+        console.log("Data from API:", data);
         const filteredProducts = data.filter(
           (product: {
             cart_owner: string;
@@ -48,7 +48,7 @@ export default function Cart() {
     };
 
     fetchData();
-  }, [userid]); // Add userid as dependency to useEffect
+  }, [userid]);
 
   const deleteProduct = async (productId: number) => {
     try {
@@ -61,7 +61,6 @@ export default function Cart() {
       if (!response.ok) {
         throw new Error("Failed to delete product");
       }
-      // Remove the deleted product from the local state
       setProducts(products.filter((product) => product.id !== productId));
     } catch (error) {
       console.error("Error deleting product:", error);
@@ -79,7 +78,6 @@ export default function Cart() {
       if (!response.ok) {
         throw new Error("Failed to update product amount");
       }
-      // Update the amount in the local state
       setProducts(
         products.map((product) =>
           product.id === productId ? { ...product, amount: newAmount } : product
