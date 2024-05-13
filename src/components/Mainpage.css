@@ -49,3 +49,72 @@
     display: flex;
     flex-direction: row;
 }
+
+.popup{
+    position:fixed;
+    display: flex;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.popup-inner{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    height: 40%;
+    background-color: burlywood;
+    gap:5px;
+    border: 2px solid rgb(226, 79, 42);
+
+}
+
+.product-list{
+    overflow: scroll;
+}
+
+/* Add this CSS to your Mainpage.css file */
+
+.product-list table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .product-list th,
+  .product-list td {
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .product-list th {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+  }
+  
+  .product-list td {
+    border: 1px solid #ddd;
+  }
+  
+  .product-list th:first-child,
+  .product-list td:first-child {
+    min-width: 200px; /* Adjust the width of the first column */
+  }
+  
+  .product-list th:nth-child(2),
+  .product-list td:nth-child(2) {
+    min-width: 100px; /* Adjust the width of the second column */
+  }
+  
+  .product-list th:nth-child(3),
+  .product-list td:nth-child(3) {
+    min-width: 150px; /* Adjust the width of the third column */
+  }
+  
+  /* Add more nth-child selectors as needed to adjust other columns */
+  

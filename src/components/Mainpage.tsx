@@ -2,38 +2,29 @@ import { ChangeEvent, useEffect, useState } from "react";
 import "./Mainpage.css";
 import { useLocation, useNavigate } from "react-router-dom";
 
+interface Product {
+  name: string;
+  price: number;
+  description: string;
+  category: string;
+}
+
 export default function Mainpage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const state = location.state;
+  const state: string = location.state;
 
-  const [userid, setUserid] = useState("default_user");
-  const [products, setProducts] = useState<
-    Array<{
-      name: string;
-      price: number;
-      description: string;
-      category: string;
-    }>
-  >([]);
-
-  const [filteredProducts, setFilteredProducts] = useState<
-    Array<{
-      name: string;
-      price: number;
-      description: string;
-      category: string;
-    }>
-  >([]);
+  const [userid, setUserid] = useState<string>("default_user");
+  const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     if (state != null) {
       setUserid(state);
     }
-
-    // Fetch data when component mounts
     fetchData();
-  }, [state]); // Add state as a dependency to useEffect
+  }, [state]);
 
   const fetchData = async () => {
     try {
@@ -41,8 +32,7 @@ export default function Mainpage() {
       if (!response.ok) {
         throw new Error("Failed to fetch products");
       }
-      const data = await response.json();
-      console.log("Data from API:", data); // Log data here
+      const data: Product[] = await response.json();
       setProducts(data);
       setFilteredProducts(data);
     } catch (error) {
@@ -50,8 +40,8 @@ export default function Mainpage() {
     }
   };
 
-  const [textInput, setTextInput] = useState("");
-  const [selectedOption, setSelectedOption] = useState("option1");
+  const [textInput, setTextInput] = useState<string>("");
+  const [selectedOption, setSelectedOption] = useState<string>("Any");
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTextInput(e.target.value);
@@ -62,7 +52,6 @@ export default function Mainpage() {
   };
 
   const handleSearch = async () => {
-    // Filter products based on search text and selected category
     const filtered = products.filter((product) => {
       const searchTextMatch = product.name
         .toLowerCase()
@@ -74,9 +63,12 @@ export default function Mainpage() {
     setFilteredProducts(filtered);
   };
 
-  const handleAddToCart = async (productName: string) => {
-    // Check if userid is not "default_user"
-    if (userid !== "default_user") {
+  const handleViewProduct = (product: Product) => {
+    setSelectedProduct(product);
+  };
+
+  const handleAddToCart = async () => {
+    if (userid !== "default_user" && selectedProduct) {
       try {
         const response = await fetch(
           "http://localhost:8080/api/addcart_product",
@@ -87,15 +79,15 @@ export default function Mainpage() {
             },
             body: JSON.stringify({
               cart_owner: userid,
-              product_name: productName,
+              product_name: selectedProduct.name,
             }),
           }
         );
         if (!response.ok) {
           throw new Error("Failed to add product to cart");
         }
-        console.log("Product added to cart:", productName);
-        // You can add further handling here, such as updating UI to reflect the addition to cart
+        console.log("Product added to cart:", selectedProduct.name);
+        setSelectedProduct(null);
       } catch (error) {
         console.error("Error adding product to cart:", error);
       }
@@ -122,7 +114,7 @@ export default function Mainpage() {
       </div>
       <div className="searchBar">
         <input
-          type="searchBartext"
+          type="search"
           value={textInput}
           onChange={handleInputChange}
           placeholder="Type: "
@@ -142,7 +134,7 @@ export default function Mainpage() {
           Search
         </button>
       </div>
-      <div>
+      <div className="product-list">
         <h2>Products</h2>
         <table>
           <thead>
@@ -153,16 +145,14 @@ export default function Mainpage() {
             </tr>
           </thead>
           <tbody>
-            {filteredProducts.map((filteredProducts, index) => (
+            {filteredProducts.map((product, index) => (
               <tr key={index}>
-                <td>{filteredProducts.name}</td>
-                <td>{filteredProducts.price}</td>
-                <td>{filteredProducts.category}</td>
+                <td>{product.name}</td>
+                <td>{product.price}</td>
+                <td>{product.category}</td>
                 <td>
-                  <button
-                    onClick={() => handleAddToCart(filteredProducts.name)}
-                  >
-                    Add to Cart
+                  <button onClick={() => handleViewProduct(product)}>
+                    View Product
                   </button>
                 </td>
               </tr>
@@ -170,6 +160,22 @@ export default function Mainpage() {
           </tbody>
         </table>
       </div>
+      {selectedProduct && (
+        <div className="popup">
+          <div className="popup-inner">
+            <h2>{selectedProduct.name}</h2>
+            <p>{selectedProduct.description}</p>
+            <p>Price: {selectedProduct.price}</p>
+            <button onClick={handleAddToCart}>Add to Cart</button>
+            <button
+              className="close-btn"
+              onClick={() => setSelectedProduct(null)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

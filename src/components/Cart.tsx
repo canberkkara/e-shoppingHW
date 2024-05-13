@@ -10,7 +10,7 @@ export default function Cart() {
   const [products, setProducts] = useState<
     Array<{
       cart_owner: string;
-      product_name: number;
+      product_name: string;
       added_date: string;
       id: number;
       amount: number;
@@ -29,9 +29,10 @@ export default function Cart() {
         const filteredProducts = data.filter(
           (product: {
             cart_owner: string;
-            product_name: number;
+            product_name: string;
             added_date: string;
             id: number;
+            amount: number;
           }) => product.cart_owner === userid
         );
         setProducts(filteredProducts);
@@ -69,16 +70,12 @@ export default function Cart() {
 
   const updateAmount = async (productId: number, newAmount: number) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/updateamount`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: productId, // Sending the product id
-          amount: newAmount, // Sending the new amount
-        }),
-      });
+      const response = await fetch(
+        `http://localhost:8080/api/update_amount/${productId}?amount=${newAmount}`,
+        {
+          method: "PUT",
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to update product amount");
       }
