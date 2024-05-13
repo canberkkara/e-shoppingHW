@@ -33,7 +33,7 @@ public class cart_product {
         return amount;
     }
 
-    private Long amount;
+    private Long amount = 1L;
 
     public void setAdded_date(String added_date) {
         this.added_date = added_date;

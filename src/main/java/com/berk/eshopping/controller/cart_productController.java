@@ -28,8 +28,8 @@ public class cart_productController {
         return cart_productService.deleteCart_product(id);
     }
 
-    @PutMapping("/api/updateamount")
-    public cart_product updateAmount(@RequestBody cart_product cartProduct){
-        return cart_productService.update(cartProduct);
+    @PutMapping("/api/update_amount/{id}")
+    public cart_product updateCartProduct(@PathVariable Long id, @RequestParam Long amount) {
+        return cart_productService.updateCart_product(id, amount);
     }
 }

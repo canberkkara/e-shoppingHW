@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class cart_productService {
@@ -25,7 +26,14 @@ public class cart_productService {
         return "Deleted";
     }
 
-    public cart_product update(cart_product cartProduct){
-        return cartProductRepository.save(cartProduct);
+    public cart_product updateCart_product(Long id, Long amount) {
+        Optional<cart_product> optionalCartProduct = cartProductRepository.findById(id);
+        if (optionalCartProduct.isPresent()) {
+            cart_product cartProduct = optionalCartProduct.get();
+            cartProduct.setAmount(amount);
+            return cartProductRepository.save(cartProduct);
+        } else {
+            throw new RuntimeException("User not found with id: " + id);
+        }
     }
 }
